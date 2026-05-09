@@ -1,0 +1,18 @@
+{
+  "name": "ifc-audit-dashboard",
+  "version": "1.0.0",
+  "description": "Sistema web para auditoria de dados de arquivos IFC a partir de critérios configuráveis.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "ifc",
+    "bim",
+    "auditoria",
+    "dashboard"
+  ],
+  "author": "",
+  "license": "MIT"
+}
