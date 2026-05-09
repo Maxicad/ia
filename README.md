@@ -13,6 +13,16 @@ Sistema web para auditoria de dados de arquivos IFC a partir de uma lista de cri
 - Exportação do relatório de auditoria em JSON e CSV.
 - Dados de exemplo para demonstração rápida.
 
+
+## Como usar as informações da auditoria
+
+1. **Pontuação**: use o percentual do dashboard como indicador geral de conformidade do conjunto federado.
+2. **Pendências**: trate primeiro os critérios reprovados com severidade alta, pois eles indicam falhas de informação que podem bloquear entregas BIM.
+3. **Amostras de entidades**: na tabela de resultados, abra "Ver amostras" para identificar o arquivo IFC, o STEP ID e o nome da entidade que precisa ser corrigida.
+4. **Inventário federado**: acompanhe a contagem por tipo de entidade para verificar se disciplinas esperadas, como arquitetura, estrutura ou ambientes, foram carregadas no modelo federado.
+5. **Exportações**: use JSON para integração com outros sistemas e CSV para planilhas, relatórios de reunião ou acompanhamento de correções.
+6. **Ciclo de correção**: corrija os dados no software BIM autoral, exporte novamente o IFC e recarregue os arquivos no dashboard para confirmar a melhoria da pontuação.
+
 ## Como executar
 
 ```bash

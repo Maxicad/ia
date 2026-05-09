@@ -100,6 +100,10 @@ input, select {
 }
 form button { align-self: end; }
 
+.usage-guide { margin: 1.25rem 0; }
+.usage-guide ol { display: grid; gap: 0.8rem; margin: 1rem 0 0; padding-left: 1.2rem; }
+.usage-guide li { color: var(--muted); line-height: 1.6; }
+.usage-guide strong { color: var(--text); }
 .empty-state { margin-top: 1.25rem; text-align: center; }
 .dashboard { display: grid; gap: 1.25rem; }
 .kpi-grid { display: grid; gap: 1rem; grid-template-columns: repeat(4, minmax(0, 1fr)); }
