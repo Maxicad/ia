@@ -1,0 +1,19 @@
+{
+  "project": {
+    "name": "Projeto exemplo",
+    "type": "arquitetura",
+    "checklistName": "Teste simples - paredes com nivel"
+  },
+  "criteria": [
+    {
+      "name": "Paredes possuem nivel da construcao definido",
+      "type": "wall-storey-defined",
+      "target": "IFCWALL|IFCWALLSTANDARDCASE",
+      "pattern": "IFCBUILDINGSTOREY",
+      "threshold": 100,
+      "projectType": "todos",
+      "category": "Niveis da Construcao",
+      "severity": "high"
+    }
+  ]
+}
