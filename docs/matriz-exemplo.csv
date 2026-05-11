@@ -1,0 +1,2 @@
+criterio;tipo;alvo;padrao;percentual;tipo de projeto;categoria;severidade
+Paredes possuem nivel da construcao definido;wall-storey-defined;IFCWALL|IFCWALLSTANDARDCASE;IFCBUILDINGSTOREY;100;todos;Niveis da Construcao;alta
