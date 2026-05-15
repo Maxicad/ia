@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IFC Audit Dashboard</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="hero">
+      <nav>
+        <span class="brand">IFC Audit</span>
+        <div>
+          <button id="load-sample" class="secondary">Carregar exemplos</button>
+          <button id="reset-data" class="ghost">Limpar</button>
+        </div>
+      </nav>
+      <section>
+        <p class="eyebrow">Auditoria BIM baseada em critérios</p>
+        <h1>Carregue arquivos IFC, gere um modelo federado e acompanhe a conformidade em dashboard.</h1>
+        <p class="hero-copy">A aplicação processa arquivos IFC no navegador, consolida entidades de múltiplos modelos e avalia regras configuráveis para apoiar revisões de qualidade de dados.</p>
+        <label class="upload-card" for="ifc-files">
+          <input id="ifc-files" type="file" accept=".ifc,.ifczip,.txt" multiple>
+          <strong>Selecionar arquivos IFC</strong>
+          <span>É possível importar diversos arquivos para formar uma federação.</span>
+        </label>
+      </section>
+    </header>
+
+    <main>
+      <section class="grid two-columns">
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Modelos</p>
+              <h2>Federação IFC</h2>
+            </div>
+          </div>
+          <ul id="models-list" class="models-list"></ul>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Critérios</p>
+              <h2>Lista de auditoria</h2>
+            </div>
+          </div>
+          <div id="criteria-list" class="criteria-list"></div>
+        </article>
+      </section>
+
+      <section class="panel criteria-builder">
+        <div>
+          <p class="eyebrow">Configuração</p>
+          <h2>Adicionar critério</h2>
+          <p>Crie regras por entidade IFC, atributo e operador para validar requisitos de informação.</p>
+        </div>
+        <form id="criteria-form">
+          <label>Nome<input name="name" placeholder="Ex.: Portas com largura" required></label>
+          <label>Descrição<input name="description" placeholder="Descrição do requisito"></label>
+          <label>Severidade
+            <select name="severity">
+              <option value="media">Média</option>
+              <option value="alta">Alta</option>
+              <option value="baixa">Baixa</option>
+            </select>
+          </label>
+          <label>Entidade IFC<input name="entity" placeholder="IFCDOOR" required></label>
+          <label>Atributo<input name="property" placeholder="Name, Tag, PredefinedType"></label>
+          <label>Operador
+            <select name="operator">
+              <option value="not_empty">Preenchido</option>
+              <option value="exists">Entidade existe</option>
+              <option value="equals">Igual a</option>
+              <option value="contains">Contém</option>
+              <option value="starts_with">Começa com</option>
+            </select>
+          </label>
+          <label>Valor esperado<input name="expected" placeholder="Valor para comparação"></label>
+          <button type="submit">Adicionar regra</button>
+        </form>
+      </section>
+
+      <section class="panel usage-guide">
+        <div>
+          <p class="eyebrow">Como usar essas informações?</p>
+          <h2>Transforme a auditoria em decisões de qualidade BIM</h2>
+        </div>
+        <ol>
+          <li><strong>Priorize pendências críticas:</strong> comece pelos critérios com severidade alta e status reprovado.</li>
+          <li><strong>Localize o problema:</strong> use o arquivo, o identificador STEP e a amostra da entidade para encontrar o item no software BIM autoral.</li>
+          <li><strong>Corrija e reaudite:</strong> ajuste propriedades IFC como Name, Tag ou PredefinedType, exporte o IFC novamente e recarregue no painel.</li>
+          <li><strong>Compartilhe evidências:</strong> baixe JSON para integração com outros sistemas ou CSV para planilhas e atas de reunião.</li>
+        </ol>
+      </section>
+
+      <section id="empty-state" class="empty-state">
+        <h2>Dashboard pronto para receber dados</h2>
+        <p>Importe arquivos IFC ou carregue exemplos para gerar a auditoria automaticamente.</p>
+      </section>
+
+      <section id="dashboard" class="dashboard" hidden>
+        <div class="kpi-grid">
+          <article class="kpi primary"><span>Pontuação</span><strong id="score">0%</strong></article>
+          <article class="kpi"><span>Modelos</span><strong id="model-count">0</strong></article>
+          <article class="kpi"><span>Entidades</span><strong id="entity-count">0</strong></article>
+          <article class="kpi"><span>Pendências</span><strong id="issue-count">0</strong></article>
+        </div>
+
+        <section class="grid two-columns">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Inventário federado</p>
+                <h2>Entidades mais frequentes</h2>
+              </div>
+            </div>
+            <div id="entity-chart" class="entity-chart"></div>
+          </article>
+
+          <article class="panel report-actions">
+            <p class="eyebrow">Relatório</p>
+            <h2>Exportação da auditoria</h2>
+            <p>Última execução: <strong id="report-date">-</strong></p>
+            <button id="export-json">Baixar JSON</button>
+            <button id="export-csv" class="secondary">Baixar CSV</button>
+          </article>
+        </section>
+
+        <article class="panel audit-results">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Resultados</p>
+              <h2>Dashboard de conformidade</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table id="audit-table">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Critério</th>
+                  <th>Severidade</th>
+                  <th>Entidade</th>
+                  <th>Avaliados</th>
+                  <th>Mensagem</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
